@@ -1,0 +1,59 @@
+.itemImage {
+  width: 180px;
+}
+.imageContainer {
+  width: 220px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cartItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 25px;
+  border-bottom: 2px solid rgb(94, 94, 94);
+}
+.nameAndImg {
+  display: flex;
+  align-items: center;
+}
+.inAndDeButton {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-right: 220px;
+}
+.inAndDeButton button {
+  font-size: 30px;
+  cursor: pointer;
+  background:rgb(182, 182, 182);
+  
+  color: rgb(255, 255, 255);
+  border-radius: 50%;
+  border: none;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.removeBtn {
+  padding: 8px 12px;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 15px;
+}
+.name {
+  font-size: 17px;
+  font-weight: 700;
+}
+.price {
+  font-weight: 600;
+  font-size: 15px;
+}

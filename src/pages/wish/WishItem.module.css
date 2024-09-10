@@ -1,0 +1,41 @@
+.wishImg {
+  max-width: 150px;
+}
+.wishItem {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 2px solid rgb(255, 93, 43);
+  position: relative;
+  padding: 20px 30px;
+  align-items: center;
+}
+.wishButton {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  font-size: 22px;
+  color: rgb(255, 84, 65);
+}
+.imgText {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.cartBtn {
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(255, 93, 43);
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 7px 15px;
+}
+.productName{
+    font-weight: 600;
+}
+.price{
+    font-size: 15px;
+    font-weight: 600;
+}

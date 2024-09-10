@@ -1,0 +1,51 @@
+
+.menuItem {
+  /* height: 400px; */
+  background-color: rgb(238, 238, 238);
+  /* width: 500px; */
+  position: relative;
+  border-radius: 5px;
+  padding: 20px;
+}
+.wishButton {
+  font-size: 25px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: rgb(190, 190, 190);
+  cursor: pointer;
+}
+.itemImage {
+  cursor: pointer;
+  max-width: 400px;
+  min-width: 300px;
+  
+}
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}
+.itemName {
+  font-size: 17px;
+  margin: 5px 20px;
+  font-weight: 600;
+}
+.itemPrice {
+  font-size: 17px;
+  margin: 5px 20px 15px;
+  font-weight: 600;
+}
+.available{
+    margin: 0 20px;
+    font-size: 17px;
+    font-weight: 600;
+    color: rgb(2 173 2);
+}
+.soldOut{
+    margin: 0 20px;
+    font-size: 17px;
+    font-weight: 600;
+    color: rgb(255 62 41);
+}

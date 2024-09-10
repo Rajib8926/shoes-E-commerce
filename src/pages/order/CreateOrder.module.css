@@ -1,0 +1,32 @@
+.CreateOrderCont {
+  padding-top: 110px;
+  margin: 0 390px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+.CreateOrderCont Form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.CreateOrderCont input {
+  width: 700px;
+  height: 55px;
+  border: none;
+  border-bottom: 2px solid rgb(175, 175, 175);
+  font-size: 15px;
+  font-weight: 500;
+  background: rgb(248, 248, 248);
+  padding: 12px;
+  margin-top: 10px;
+}
+.CreateOrderCont button {
+  padding: 10px 15px;
+  background-color: black;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
