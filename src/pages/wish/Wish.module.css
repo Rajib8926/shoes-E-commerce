@@ -1,12 +1,23 @@
-.WishListContainer{
-    padding-top: 110px;
-    margin: 0 390px;
-    height: 100vh;
+.WishListContainer {
+  padding-top: 110px;
+  margin: 0 390px;
+  height: 100vh;
 }
-.WishListContainer h1{
-    color: rgb(255, 93, 43);
-    margin-bottom: 30px;
+.WishListContainer h1 {
+  color: rgb(255, 93, 43);
+  margin-bottom: 30px;
 }
-.wishItemContainer{
-    background-color: rgb(238, 238, 238);
+.wishItemContainer {
+  background-color: rgb(238, 238, 238);
+}
+
+.emptyContainer{
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.lottieIcon{
+    width: 530px;
 }

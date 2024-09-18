@@ -5,15 +5,15 @@ import { usePosts } from "../../PostProvider";
 import { useState } from "react";
 function CartItem({ item }) {
   const [quantitys, setQuantitys] = useState(item.quantity);
-  const { getCart ,countCartFn} = usePosts();
+  const { getCart, countCartFn, removeCart } = usePosts();
   const db = getFirestore(app);
-  async function removeCart(product) {
-    const examcollref = doc(db, "menu", product.id);
-    updateDoc(examcollref, {
-      inCart: false,
-    });
-    await deleteDoc(doc(db, "cart", product.id)).then(getCart);
-  }
+  // async function removeCart(product) {
+  //   const examcollref = doc(db, "menu", product.id);
+  //   updateDoc(examcollref, {
+  //     inCart: false,
+  //   });
+  //   await deleteDoc(doc(db, "cart", product.id)).then(getCart);
+  // }
   function decriseQu(product) {
     setQuantitys((num) => num - 1);
     const examcollref = doc(db, "cart", product.id);
@@ -52,7 +52,10 @@ function CartItem({ item }) {
           <button onClick={() => incriseQu(item)}>+</button>
         </div>
         <div>
-          <button className={styles.removeBtn} onClick={() => removeCart(item).then(countCartFn)}>
+          <button
+            className={styles.removeBtn}
+            onClick={() => removeCart(item).then(countCartFn)}
+          >
             Remove From Cart
           </button>
         </div>

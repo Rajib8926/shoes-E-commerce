@@ -8,7 +8,8 @@ import Wish from "./pages/wish/Wish";
 import Cart from "./pages/cart/Cart";
 import CreateOrder from "./pages/order/CreateOrder";
 import Product from "./pages/product/Product";
-
+import { action as orderAction } from "./pages/order/CreateOrder";
+import PaymentOrder from "./pages/order/PaymentOrder";
 function App() {
   const route = createBrowserRouter([
     {
@@ -34,6 +35,11 @@ function App() {
         {
           path: "/createOrder",
           element: <CreateOrder />,
+          action: orderAction,
+        },
+        {
+          path: "/orderPayment",
+          element: <PaymentOrder />,
         },
         {
           path: "/wish",

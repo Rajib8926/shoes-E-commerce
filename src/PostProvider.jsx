@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect } from "react";
 import {
+  addDoc,
   collection,
   deleteDoc,
   doc,
@@ -19,6 +20,7 @@ function PostProvider({ children }) {
   const [wishList, setWishList] = useState();
   const [cartList, setCartList] = useState();
   const [cartCount, setCartCount] = useState();
+  const [orderList, setOrderList] = useState();
   // useEffect(() => {
   //   getData();
   // }, []);
@@ -32,7 +34,21 @@ function PostProvider({ children }) {
     }));
     setProductList(data);
   }
-
+  async function countCartFn() {
+    const db = getFirestore(app);
+    const coll = collection(db, "cart");
+    const snapshot = await getCountFromServer(coll);
+    const cartCount = snapshot.data().count;
+    setCartCount(cartCount);
+  }
+  const deleteOrder = async (orderId) => {
+    console.log(orderId);
+    const db = getFirestore(app);
+    await deleteDoc(doc(db, "orders", orderId)).then(getOrder);
+  };
+  const deleteCart = async () => {
+    await cartList.map((el) => removeCart(el).then(countCartFn));
+  };
   async function getWish() {
     const db = getFirestore(app);
     const docRef = collection(db, "wish");
@@ -73,12 +89,29 @@ function PostProvider({ children }) {
       soldOut: product.soldOut,
       imageUrl: product.imageUrl,
       quantity: 1,
-      totalPrice:product.price
-    });
+      totalPrice: product.price,
+    }).then(countCartFn);
     const examcollref = doc(db, "menu", product.id);
     updateDoc(examcollref, {
       inCart: isCart,
     });
+  };
+
+  ///// set order function/////////////
+  const setOrderFn = async (order) => {
+    const db = getFirestore(app);
+    const docRef = await addDoc(collection(db, "orders"), order);
+  };
+
+  const getOrder = async () => {
+    const db = getFirestore(app);
+    const docRef = collection(db, "orders");
+    const docSnap = await getDocs(docRef);
+    const data = docSnap.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    setOrderList(data);
   };
 
   const wishHandler = async (e, product, setIsWish) => {
@@ -96,6 +129,7 @@ function PostProvider({ children }) {
       price: product.price,
       soldOut: product.soldOut,
       imageUrl: product.imageUrl,
+      inCart: product.inCart,
     }).then(getWish);
     if (isWish === false) {
       await deleteDoc(doc(db, "wish", product.id));
@@ -105,12 +139,13 @@ function PostProvider({ children }) {
       wish: isWish,
     }).then((ref) => getData());
   };
-  async function countCartFn() {
+  async function removeCart(product) {
     const db = getFirestore(app);
-    const coll = collection(db, "cart");
-    const snapshot = await getCountFromServer(coll);
-    const cartCount = snapshot.data().count;
-    setCartCount(cartCount);
+    const examcollref = doc(db, "menu", product.id);
+    updateDoc(examcollref, {
+      inCart: false,
+    });
+    await deleteDoc(doc(db, "cart", product.id)).then(getCart);
   }
 
   return (
@@ -127,6 +162,12 @@ function PostProvider({ children }) {
         handleCart,
         countCartFn,
         cartCount,
+        setOrderFn,
+        orderList,
+        getOrder,
+        deleteOrder,
+        deleteCart,
+        removeCart,
       }}
     >
       {children}

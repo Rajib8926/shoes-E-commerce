@@ -29,4 +29,19 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin-top: 20px;
+}
+.emptyContainer{
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+}
+.emptyItem{
+  width: 350px;
+}
+.emptyContainer h2{
+  color: rgb(68, 68, 68);
 }

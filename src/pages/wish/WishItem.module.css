@@ -12,10 +12,11 @@
 }
 .wishButton {
   position: absolute;
-  right: 4px;
-  top: 4px;
-  font-size: 22px;
+  right: 5px;
+  top: 5px;
+  font-size: 23px;
   color: rgb(255, 84, 65);
+  cursor: pointer;
 }
 .imgText {
   display: flex;

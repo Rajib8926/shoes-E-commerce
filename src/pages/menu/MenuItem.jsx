@@ -1,5 +1,4 @@
 import { usePosts } from "../../PostProvider";
-import { app } from "../../fireBase";
 import { useNavigate } from "react-router-dom";
 import styles from "./MenuItem.module.css";
 import { MdOutlineFavoriteBorder } from "react-icons/md";

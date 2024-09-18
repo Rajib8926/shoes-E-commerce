@@ -66,9 +66,11 @@ function Product() {
           ))}
         </div>
         <div className={styles.buttonSection}>
-          {productData?.inCart ? (
+          {productData?.soldOut ? (
+            <p className={styles.soldOut}>Sold Out</p>
+          ) : productData?.inCart ? (
             <button className={styles.cartButtonIn}>
-              Product In Already In Cart
+              Product Is Already In Cart
             </button>
           ) : (
             <button
