@@ -6,36 +6,38 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { MdOutlineFavoriteBorder } from "react-icons/md";
 import styles from "./Navbar.module.css";
 import { usePosts } from "../PostProvider";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Hamburger from "./Hamburger";
+
 function Navbar() {
   const { countCartFn, cartCount } = usePosts();
+  const [isActive, setActive] = useState(false);
+  const ToggleClass = () => {
+    setActive(!isActive);
+  };
   useEffect(function () {
     countCartFn();
   }, []);
   return (
-    <nav>
-      <NavLink to={"/"}>
-        <HiOutlineHome />
-      </NavLink>
-      <NavLink to={"/menu"}>
-        <AiOutlineProduct />
-      </NavLink>
-      <NavLink to={"/cart"}>
-        <div className={styles.cartContainer}>
+    <nav className={styles.navigationBar}>
+      <Hamburger/>
+      <div className={styles.fullNavigationCont}>
+        <NavLink to={"/"}>
+          <HiOutlineHome />
+        </NavLink>
+        <NavLink to={"/menu"}>
+          <AiOutlineProduct />
+        </NavLink>
+        <NavLink to={"/wish"}>
+          <MdOutlineFavoriteBorder />
+        </NavLink>
+        <NavLink to={"/cart"}>
           <RiShoppingCartLine />
-          {cartCount !== 0 ? (
-            <div className={styles.cartCount}>{cartCount}</div>
-          ) : (
-            ""
-          )}
-        </div>
-      </NavLink>
-      <NavLink to={"/order"}>
-        <TbTruckDelivery />
-      </NavLink>
-      <NavLink to={"/wish"}>
-        <MdOutlineFavoriteBorder />
-      </NavLink>
+        </NavLink>
+        <NavLink to={"/order"}>
+          <TbTruckDelivery />
+        </NavLink>
+      </div>
     </nav>
   );
 }

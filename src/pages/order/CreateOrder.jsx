@@ -4,6 +4,10 @@ import { useState } from "react";
 import { usePosts } from "../../PostProvider";
 import Lottie from "lottie-react";
 import animationData from "../../assets/createOrder.json";
+import { BsXCircleFill } from "react-icons/bs";
+
+import { RxCheckCircled } from "react-icons/rx";
+
 function CreateOrder() {
   const [correctNo, setCorrectNo] = useState(true);
   const [correctNoSe, setCorrectNoSe] = useState(true);
@@ -20,83 +24,119 @@ function CreateOrder() {
   return (
     <div className={styles.CreateOrderCont}>
       <div>
-        {cartList.length === 0 ? (
+        {cartList?.length === 0 ? (
           <div className={styles.emptyContainer}>
             <h2>Your Cart is Empty</h2>
-            <Lottie className={styles.emptyItem} animationData={animationData}/>
+            <Lottie
+              className={styles.emptyItem}
+              animationData={animationData}
+            />
           </div>
         ) : (
           <Form method="POST">
-            <input
-              type="text"
-              placeholder="Full Name"
-              required
-              name="FullName"
-            />
-            <input
-              type="number"
-              name="Ph_no"
-              placeholder="Ph. no"
-              required
-              onChange={(e) =>
-                Number(e.target.value) > 0
-                  ? setCorrectNo(validatePhoneNumber(Number(e.target.value)))
-                  : ""
-              }
-            />
-            {!correctNo ? (
-              <p
-                style={{
-                  color: "red",
-                  fontSize: "12px",
-                  fontWeight: "600",
-                  textAlign: "left",
-                  width: "100%",
-                }}
-              >
-                Enter Correct Ph. no
-              </p>
-            ) : (
-              ""
-            )}
+            <div>
+              <p className={styles.label}>Full name</p>
+              <input
+                type="text"
+                placeholder="Full Name"
+                required
+                name="FullName"
+              />
+            </div>
+            <div className={styles.numberInput}>
+              <p className={styles.label}>Ph. Number</p>
+              <input
+                type="number"
+                name="Ph_no"
+                placeholder="Ph. no"
+                required
+                onChange={(e) =>
+                  Number(e.target.value) > 0
+                    ? setCorrectNo(validatePhoneNumber(Number(e.target.value)))
+                    : ""
+                }
+              />
+              {!correctNo ? (
+                <p className={styles.crossIcon}>
+                  <BsXCircleFill />
+                </p>
+              ) : (
+                <p className={styles.rightIcon}>{""}</p>
+              )}
+            </div>
 
-            <input
-              type="number"
-              name="Backup_PhNo"
-              placeholder="Backup Ph. No"
-              required
-              onChange={(e) =>
-                Number(e.target.value) > 0
-                  ? setCorrectNoSe(validatePhoneNumber(Number(e.target.value)))
-                  : ""
-              }
-            />
-            {!correctNoSe ? (
-              <p
-                style={{
-                  color: "red",
-                  fontSize: "12px",
-                  fontWeight: "600",
-                  textAlign: "left",
-                  width: "100%",
-                }}
-              >
-                Enter Correct Ph. no
-              </p>
-            ) : (
-              ""
-            )}
-            <input type="text" placeholder="Address" required name="Address" />
-            <input type="text" placeholder="State" required name="State" />
-            <input
-              type="text"
-              placeholder="Nearest Road"
-              required
-              name="NearestRoad"
-            />
-            <input type="number" placeholder="Enter PIN" required name="Pin" />
-            <input type="text" placeholder="City" required name="ciry" />
-            <input type="number" placeholder="House Number" required />
+            <div>
+              <div className={styles.numberInput}>
+                <p className={styles.label}>Backup Ph. Number</p>
+                <div>
+                  <input
+                    type="number"
+                    name="Backup_PhNo"
+                    placeholder="Backup Ph. No"
+                    required
+                    onChange={(e) =>
+                      Number(e.target.value) > 0
+                        ? setCorrectNoSe(
+                            validatePhoneNumber(Number(e.target.value))
+                          )
+                        : ""
+                    }
+                  />
+                  {!correctNoSe ? (
+                    <p className={styles.crossIcon}>
+                      <BsXCircleFill />
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <p className={styles.label}>Address</p>
+              <input
+                type="text"
+                placeholder="Address"
+                required
+                name="Address"
+              />
+            </div>
+            <div>
+              <p className={styles.label}>State</p>
+              <input type="text" placeholder="State" required name="State" />
+            </div>
+            <div>
+              <p className={styles.label}>Nearest Road</p>
+              <input
+                type="text"
+                placeholder="Nearest Road"
+                required
+                name="NearestRoad"
+              />
+            </div>
+            <div>
+              <p className={styles.label}>PIN Number</p>
+              <input
+                type="number"
+                placeholder="Enter PIN"
+                required
+                name="Pin"
+              />
+            </div>
+            <div>
+              <p className={styles.label}>City</p>
+              <input
+                type="text"
+                placeholder="Enter City"
+                required
+                name="city"
+              />
+            </div>
+            <div>
+              <p className={styles.label}>House Number</p>
+              <input type="number" placeholder="House Number" required />
+            </div>
             <button className="orderBtn" type="submit">
               Order Place
             </button>
@@ -108,8 +148,15 @@ function CreateOrder() {
 }
 export async function action({ request }) {
   const formData = await request.formData();
-  const data = Object.fromEntries(formData);
-
+  const obj = Object.fromEntries(formData);
+  const SubDate = new Date();
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+  const date = formatter.format(SubDate);
+  const data = { ...obj, date: date };
   await localStorage.setItem("orderDetails", JSON.stringify(data));
   return redirect(`/orderPayment`);
 }

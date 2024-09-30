@@ -3,7 +3,28 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 0 170px;
+    margin: 0 50px;
+    margin-bottom: 200px;
     gap: 20px;
     min-height: 100vh;
+  }
+  @media only screen and (max-width: 1063px){
+    .menuContainer{
+      margin: 0 5px;
+      margin-bottom: 100px;
+    }
+  }
+  @media only screen and (max-width: 604px){
+    .menuContainer{
+      gap: 5px;
+    }
+  }
+  @media only screen and (max-width: 385px){
+    .menuContainer{
+     padding-bottom: 100px;
+      gap: 3px;
+    }
+    .menuContainer{
+      margin: 0 3px;
+    }
   }

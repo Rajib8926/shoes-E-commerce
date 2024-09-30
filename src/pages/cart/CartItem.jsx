@@ -3,6 +3,9 @@ import styles from "./CartItem.module.css";
 import { app } from "../../fireBase";
 import { usePosts } from "../../PostProvider";
 import { useState } from "react";
+import { FaMinus } from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa6";
+import { HiMiniXMark } from "react-icons/hi2";
 function CartItem({ item }) {
   const [quantitys, setQuantitys] = useState(item.quantity);
   const { getCart, countCartFn, removeCart } = usePosts();
@@ -36,28 +39,32 @@ function CartItem({ item }) {
         <div className={styles.imageContainer}>
           <img className={styles.itemImage} src={item.imageUrl} alt="" />
         </div>
-        <div>
+        <div className={styles.detailSection}>
           <p className={styles.name}>{item.productName}</p>
+          <p className={styles.color}>Colour: #####</p>
           <p className={styles.price}>₹ {item.price}</p>
         </div>
       </div>
-      <div style={{ display: "flex" }}>
+      <div className={styles.inDeBrnSection}>
         <div className={styles.inAndDeButton}>
           <button
             onClick={() => (quantitys > 1 ? decriseQu(item) : removeCart(item))}
           >
-            –
+            <FaMinus />
           </button>
-          <p>{quantitys}</p>
-          <button onClick={() => incriseQu(item)}>+</button>
+          <p className={styles.quantity}>{quantitys}</p>
+          <button onClick={() => incriseQu(item)}>
+            <FaPlus />
+          </button>
         </div>
-        <div>
+        <div className={styles.btnSection}>
           <button
             className={styles.removeBtn}
             onClick={() => removeCart(item).then(countCartFn)}
           >
-            Remove From Cart
+            <HiMiniXMark />
           </button>
+          <div></div>
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { usePosts } from "../../PostProvider";
 import { useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
-import animationData from '../../assets/cartEmpty.json'
+import animationData from "../../assets/cartEmpty.json";
 import styles from "./Cart.module.css";
 import CartItem from "./CartItem";
 function Cart() {
@@ -21,20 +21,44 @@ function Cart() {
   }
   return (
     <div className={styles.cartSection}>
-      {cartList?.length === 0||cartList===undefined ? (
+      {cartList?.length === 0 || cartList === undefined ? (
         <div className={styles.emptyContainer}>
-         <Lottie className={styles.lottieIcon} animationData={animationData}/>
+          <Lottie className={styles.lottieIcon} animationData={animationData} />
         </div>
       ) : (
-        <>
-          <h1>My Cart</h1>
-          <div className={styles.cartContainer}>
-            {cartList?.map((item) => (
-              <CartItem item={item} key={item.id} />
-            ))}
+        <div className={styles.cartAndPrice}>
+          <div>
+            <h1>Cart</h1>
+            <div className={styles.cartContainer}>
+              {cartList?.map((item) => (
+                <CartItem item={item} key={item.id} />
+              ))}
+            </div>
           </div>
           <div className={styles.cartPrice}>
-            <p className={styles.totalPrice}>Total Price : ₹{totalPriceCart}</p>
+            <p className={styles.totalPrice}>₹{totalPriceCart}</p>
+            <div className={styles.priceSection}>
+              <div className={styles.priceItem}>
+                <p>Subtotal</p>
+                <p>+{totalPriceCart}</p>
+              </div>
+              <div className={styles.priceItem}>
+                <p>Delivery</p>
+                <p className={styles.free}>Free</p>
+              </div>
+              <div className={styles.priceItem}>
+                <p>Package charge</p>
+                <p className={styles.free}>Free</p>
+              </div>
+              <div className={styles.priceItem}>
+                <p>Tax</p>
+                <p>0%</p>
+              </div>
+            </div>
+            <div className={styles.priceItem} style={{margin:"7px 0"}}>
+              <p>Total</p>
+              <p>{totalPriceCart}</p>
+            </div>
             <button
               className={styles.orderButton}
               onClick={() => (cartList ? orderHandler() : "")}
@@ -42,7 +66,7 @@ function Cart() {
               Order
             </button>
           </div>
-        </>
+        </div>
       )}
     </div>
   );

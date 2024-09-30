@@ -32,6 +32,10 @@ function PostProvider({ children }) {
       id: doc.id,
       ...doc.data(),
     }));
+    // localStorage.setItem('menu', JSON.stringify(PreData));
+    // var data = JSON.parse(localStorage.getItem("menu"));
+    // console.log(data)
+
     setProductList(data);
   }
   async function countCartFn() {

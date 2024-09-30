@@ -5,17 +5,13 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  border-bottom: 2px solid rgb(255, 93, 43);
-  position: relative;
-  padding: 20px 30px;
+  padding: 20px 0;
   align-items: center;
 }
 .wishButton {
-  position: absolute;
-  right: 5px;
-  top: 5px;
   font-size: 23px;
-  color: rgb(255, 84, 65);
+  color: #2c3e50;
+  font-weight: 800;
   cursor: pointer;
 }
 .imgText {
@@ -26,17 +22,67 @@
 .cartBtn {
   border-radius: 5px;
   border: none;
-  background-color: rgb(255, 93, 43);
-  color: white;
-  font-size: 16px;
-  font-weight: 500;
+  background-color: #2c3e50;
+  color: #ececec;
+  font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
-  padding: 7px 15px;
+  padding: 10px 19px;
 }
 .productName{
-    font-weight: 600;
+  font-size: 15px;
+    font-weight: 700;
 }
 .price{
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 700;
+}
+.imgContainer{
+  background-color: rgb(238, 238, 238);
+  height: 150px;
+  width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+.color{
+  font-size: 12px;
+  font-weight: 600;
+  color: rgb(163, 163, 163);
+}
+.btnContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: end;
+  height: 150px;
+}
+.soldOut{
+  color: rgb(255, 70, 57);
+  font-size: 12px;
+  font-weight: 800;
+}
+.available{
+  color: rgb(0, 168, 0);
+  font-size: 12px;
+  font-weight: 800;
+}
+@media only screen and (max-width: 500px) {
+  .wishImg{
+    width: 110px;
+  }
+  .imgContainer{
+    width: 130px;
+    height: 120px;
+  }
+  .imgText{
+    gap: 7px;
+  }
+  .cartBtn{
+    padding: 7px 12px;
+  }
+  .productName{
+    font-size: 14px;
+  }
 }

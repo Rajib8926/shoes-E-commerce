@@ -17,7 +17,7 @@ function Wish() {
         </div>
       ) : (
         <>
-          <h1>My Wishes</h1>
+          <h1>Wish list</h1>
           <div className={styles.wishItemContainer}>
             {wishList?.map((item) => (
               <WishItem item={item} />

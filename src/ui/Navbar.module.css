@@ -1,52 +1,44 @@
-a {
-  color: rgb(255, 93, 43);
-  font-size: 28px;
-  padding: 8px;
-  border-radius: 5px;
-  text-decoration: none;
-}
-nav {
+.fullNavigationCont{
   width: 100vw;
-  height: 60px;
+  height: 55px;
   display: flex;
+  justify-content: space-around;
   align-items: center;
-  justify-content: center;
-  gap: 200px;
-  position: fixed;
-  padding-top: 30px;
-  z-index: 2;
-  backdrop-filter:blur(10px);
-}
-.wishCount{
-  background: rgb(255 91 91);
-  font-size: 12px;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  text-align: center ;
-  color: white;
-  font-weight: 700;
+  background: transparent;
   position: absolute;
-  right: -7px;
-  top: -3px;
+  top: 10px;
+  z-index: 3;
 }
-.wishContainer{
-  position: relative;
+.fullNavigationCont a{
+  font-size: 28px;
+  color: #646464;
 }
-.cartContainer{
-  position: relative;
-}
-.cartCount{
+
+.label{
+ display:flex;
+  flex-direction:column;
+  width:55px;
+  cursor:pointer;
+  margin-left: 15px;
   position: absolute;
-  font-size: 12px;
-  top: -4px;
-  right: -3px;
-  background: rgb(255, 82, 39);
-  color: white;
-  font-weight: 600;
-  display: flex;
-  justify-content: center;
-  border-radius: 50%;
-  height: 16px;
-  width: 16px;
+  top: 20px;
+  z-index: 4;
+}
+.displayNone{
+  display: none;
+}
+
+
+@media only screen and (max-width: 650px){
+  .fullNavigationCont{
+    display: none;
+    
+  }
+  
+  .displayNone{
+    display: flex;
+  }
+  .fullNavigationCont{
+    top: 0;
+  }
 }

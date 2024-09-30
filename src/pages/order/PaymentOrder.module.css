@@ -1,9 +1,11 @@
 .orderPaymentContainer {
   padding-top: 100px;
   min-height: 100vh;
+  width: 1100px;
+  margin: 0 auto;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
+  justify-content: space-between;
 }
 .orderItemBox {
   display: flex;
@@ -11,54 +13,132 @@
   align-items: center;
   width: 600px;
   justify-content: space-between;
-  padding: 25px;
   margin-top: 15px;
   border-radius: 5px;
-  background-color: rgb(238, 238, 238);
 }
 .productImg {
   width: 150px;
   height: auto;
 }
-.orderDetailBox {
-  width: 600px;
+.imageSection {
+  background-color: rgb(248 248 248);
   height: 150px;
+  width: 170px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.orderDetailBox {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding-left: 30px;
-  border-radius: 5px;
-  background-color: rgb(238, 238, 238);
+  width: 450px;
+  border-radius: 10px;
+  background-color: rgb(248 248 248);
   margin-top: 15px;
 }
-
+.detailSection {
+  padding: 15px 0 20px;
+  margin: 0 20px;
+  border-bottom: 3px solid #8093a5;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.detailItem {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: #000000;
+}
+.detailItem p:first-child + p {
+  color: rgb(110, 110, 110);
+  font-size: 13px;
+}
+.detailItem p:first-child {
+  font-weight: 800;
+}
+.orderDetailHeader {
+  height: 43px;
+  font-size: 19px;
+  font-weight: 500;
+  border-radius: 10px 10px 0 0;
+  color: white;
+  background-color: #2c3e50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.productName {
+  font-size: 15px;
+  font-weight: 700;
+}
+.price {
+  font-size: 13px;
+  font-weight: 700;
+}
+.quantity {
+  font-size: 14px;
+  font-weight: 600;
+}
 .bottomSection {
   margin-top: 15px;
-  width: 600px;
+  width: 450px;
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
 }
 .bottomSection button {
-  padding: 7px 12px;
-  background-color: black;
+  padding: 7px 10px;
+  background-color: #2c3e50;
   color: white;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 16em;
+  height: 3em;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
 }
 select {
   appearance: none;
   outline: 10px red;
   border: 0;
   box-shadow: none;
-font-size: 15px;
+  font-size: 15px;
   flex: 1;
   padding: 0 1em;
   color: #fff;
   background-color: #2c3e50;
   background-image: none;
   cursor: pointer;
+}
+.orderDetailText {
+  width: 180px;
+}
+.priceItem {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  font-size: 13.5px;
+  font-weight: 750;
+}
+.priceSection {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  /* margin-top: 20px; */
+  margin: 10px 22px 15px;
+  padding-bottom: 12px;
+  border-bottom: 3px solid #8093a5;
+}
+.cartPrice {
+  border: 2px solid #8093a5;
+  /* height: 250px; */
+  width: 290px;
+  padding: 15px;
+  border-radius: 10px;
+}
+.free {
+  color: #b1b1b1;
+  font-weight: 600;
 }
 
 select::-ms-expand {
@@ -67,10 +147,11 @@ select::-ms-expand {
 .select {
   position: relative;
   display: flex;
-  width: 20em;
+  width: 18em;
   height: 3em;
   border-radius: 0.25em;
   overflow: hidden;
+  font-size: 12px;
 }
 
 .select::after {
@@ -84,5 +165,66 @@ select::-ms-expand {
   pointer-events: none;
 }
 .select:hover::after {
-    color: #f35212;
+  color: #f35212;
+}
+/* .orderDetailBoxContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+} */
+@media only screen and (max-width: 1195px){
+  .orderItemBox{
+    width: 400px;
   }
+  .orderDetailBox{
+    margin-right: 20px;
+    width: 410px;
+  }
+  .bottomSection{
+    width: 410px;
+  }
+  .orderPaymentContainer{
+    width: 840px;
+  }
+}
+@media only screen and (max-width: 900px){
+  .orderPaymentContainer{
+    flex-direction: column;
+    align-items: center;
+  }
+  .orderItemBox{
+    width: 380px;
+  }
+
+  .orderPaymentContainer{
+    width: 100vw;
+    padding-bottom: 150px;
+    gap: 50px;
+  }
+}
+@media only screen and (max-width: 463px){
+  .orderDetailBox{
+    margin-right: 0px;
+    width: 96vw;
+  }
+  .orderDetailBoxContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .bottomSection{
+    width: 96vw;
+  }
+  .orderItemBox{
+    width: 96vw;
+  }
+  .imageSection{
+    width: 145px;
+    height: 130px;
+    gap: 4px;
+  }
+  .imageSection img{
+    width: 130px;
+  }
+}

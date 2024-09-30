@@ -46,16 +46,18 @@ function Product() {
         <img className={styles.image} src={productData?.imageUrl} alt="" />
       </div>
       <div className={styles.detailsSection}>
-        <div>
-          <p className={styles.productName}>{productData?.productName}</p>
-          <p className={styles.productNameTitle}>Men's Road Running Shoes</p>
-        </div>
-        <div>
-          <p className={styles.price}>MRP :₹{productData?.price}</p>
-          <p className={styles.productNameTitle}>incl. of taxes</p>
-          <p className={styles.productNameTitle}>
-            (Also includes all applicable duties)
-          </p>
+        <div style={{ width: "300px" }}>
+          <div >
+            <p className={styles.productName}>{productData?.productName}</p>
+            <p className={styles.productNameTitle}>Men's Road Running Shoes</p>
+          </div>
+          <div>
+            <p className={styles.price}>MRP :₹{productData?.price}</p>
+            <p className={styles.productNameTitle}>incl. of taxes</p>
+            <p className={styles.productNameTitle}>
+              (Also includes all applicable duties)
+            </p>
+          </div>
         </div>
         <p className={styles.sizeText}>Select Size</p>
         <div className={styles.sizeSection}>
@@ -109,7 +111,7 @@ function Product() {
           <p className={styles.productNameTitle}>
             This product is excluded from site promotions and discounts.
           </p>
-          <p style={{ marginTop: "30px" }}>
+          <p  className={styles.productAbout}>
             With maximum cushioning to support every mile, the Invincible 3
             gives you our highest level of comfort underfoot to help you stay on
             your feet today, tomorrow and beyond. Designed to help keep you on
