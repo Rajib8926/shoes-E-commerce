@@ -14,7 +14,7 @@ import { app } from "./fireBase";
 import { useState } from "react";
 
 const PostContext = createContext();
-
+// window.addEventListener("scroll",()=>{console.log(window.scrollY)})
 function PostProvider({ children }) {
   const [productList, setProductList] = useState();
   const [wishList, setWishList] = useState();

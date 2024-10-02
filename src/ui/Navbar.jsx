@@ -20,7 +20,7 @@ function Navbar() {
   }, []);
   return (
     <nav className={styles.navigationBar}>
-      <Hamburger/>
+      <Hamburger />
       <div className={styles.fullNavigationCont}>
         <NavLink to={"/"}>
           <HiOutlineHome />
@@ -32,7 +32,14 @@ function Navbar() {
           <MdOutlineFavoriteBorder />
         </NavLink>
         <NavLink to={"/cart"}>
-          <RiShoppingCartLine />
+          <div className={styles.cartContainer}>
+            <RiShoppingCartLine />
+            {cartCount !== 0 ? (
+              <div className={styles.cartCount}>{cartCount}</div>
+            ) : (
+              ""
+            )}
+          </div>
         </NavLink>
         <NavLink to={"/order"}>
           <TbTruckDelivery />
