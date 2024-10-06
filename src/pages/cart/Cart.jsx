@@ -8,20 +8,21 @@ import CartItem from "./CartItem";
 function Cart() {
   const { getCart, cartList } = usePosts();
   let totalPriceCart = 0;
-  cartList?.forEach((item) => {
-    totalPriceCart += item.totalPrice;
-  });
 
-  const navigate = useNavigate();
+  cartList?.forEach((item) => {
+  totalPriceCart += item.totalPrice;
+  });
   useEffect(function () {
     getCart();
   }, []);
+  const navigate = useNavigate();
+
   function orderHandler() {
     navigate(`/createOrder`, { replace: true });
   }
   return (
     <div className={styles.cartSection}>
-      {cartList?.length === 0 || cartList === undefined ? (
+      {cartList?.length === 0 || cartList === undefined || cartList === null ? (
         <div className={styles.emptyContainer}>
           <Lottie className={styles.lottieIcon} animationData={animationData} />
         </div>
@@ -31,7 +32,13 @@ function Cart() {
             <h1>Cart</h1>
             <div className={styles.cartContainer}>
               {cartList?.map((item) => (
-                <CartItem item={item} key={item.id} />
+                <CartItem
+                  item={item}
+                  key={item.id}
+                 
+                  totalPriceCart={totalPriceCart}
+                 
+                />
               ))}
             </div>
           </div>
@@ -55,7 +62,7 @@ function Cart() {
                 <p>0%</p>
               </div>
             </div>
-            <div className={styles.priceItem} style={{margin:"7px 0"}}>
+            <div className={styles.priceItem} style={{ margin: "7px 0" }}>
               <p>Total</p>
               <p>{totalPriceCart}</p>
             </div>

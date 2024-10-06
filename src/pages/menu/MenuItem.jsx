@@ -4,13 +4,13 @@ import styles from "./MenuItem.module.css";
 import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { useState } from "react";
 import { MdFavorite } from "react-icons/md";
-import Loading from "../../ui/Loading";
+import Star from "../../ui/Star";
 function MenuItem({ item }) {
-  const [isWish, setIsWish] = useState(item.wish);
+  const [setIsWish] = useState(item.wish);
   const { wishHandler } = usePosts();
   const navigate = useNavigate();
   function productHandler(item) {
-    navigate(`/product/${item.id}`);
+    navigate(`/product/${item.id}`, { state: item });
   }
   return (
     <div
@@ -22,7 +22,7 @@ function MenuItem({ item }) {
         onClick={(e) => wishHandler(e, item, setIsWish)}
         className={styles.wishButton}
       >
-        {isWish ? (
+        {item.wish ? (
           <MdFavorite style={{ color: "#ff5441" }} />
         ) : (
           <MdOutlineFavoriteBorder />
@@ -43,6 +43,7 @@ function MenuItem({ item }) {
       ) : (
         <p className={styles.available}>Available</p>
       )}
+      <Star />
       <div className={styles.itemPrice}>MRP : ₹ {item.price}</div>
     </div>
   );

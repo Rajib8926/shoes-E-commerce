@@ -12,7 +12,7 @@ function Order() {
 
   return (
     <div className={styles.orderContainer}>
-      {orderList?.length === 0 || orderList === undefined ? (
+      {orderList?.length === 0 || orderList === undefined || orderList === null? (
         <div className={styles.emptyContainer}>
           <Lottie className={styles.lottieIcon} animationData={animationData} />
         </div>

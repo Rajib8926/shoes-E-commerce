@@ -1,32 +1,67 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 import { app } from "../../fireBase";
 import { usePosts } from "../../PostProvider";
 import styles from "./Product.module.css";
 import { MdFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
+import Star from "../../ui/Star";
 function Product() {
   const [productData, setProductData] = useState();
-  const { productId } = useParams();
-  const { handleCart, wishHandler, countCartFn } = usePosts();
-  const navigate = useNavigate();
-  async function getProduct(productId) {
-    const db = getFirestore(app);
-    const docRef = doc(db, "menu", productId);
-    const docSnap = await getDoc(docRef);
-    const data = docSnap.data();
-    const id = docSnap.id;
-    setProductData({ ...data, id });
-  }
+  const { addCart, wishHandler, getData } = usePosts();
+  // let isCart = productData?.inCart;
+  const location = useLocation();
+  const { state } = location;
 
-  const [isWish, setIsWish] = useState();
-  console.log(productData);
   useEffect(
     function () {
-      getProduct(productId);
+      let data = undefined;
+      let cartDataPre = localStorage.getItem("royCart");
+      let cartData = JSON.parse(cartDataPre);
+
+      let wishDataPre = localStorage.getItem("royWish");
+      let wishData = JSON.parse(wishDataPre);
+      let isCartInData = cartData?.find((item) => item.id === state.id);
+      let isWishInData = wishData?.find((item) => item.id === state.id);
+
+      if (isCartInData) {
+        data = { ...state, inCart: true, wish: false };
+      }
+      if (isWishInData) {
+        if (data) {
+          data = { ...data, wish: true };
+        } else if (!data) {
+          data = { ...state, wish: true };
+        }
+      }
+
+      setProductData(data ? data : state);
+      getData();
     },
-    [productId]
+    [state]
   );
+
+  const [isCart, setIsCart] = useState(productData?.inCart);
+  const [isWish, setIsWish] = useState(productData?.wish);
+
+  useEffect(
+    function () {
+      setIsWish(productData?.wish);
+      setIsCart(productData?.inCart);
+    },
+    [productData]
+  );
+
+  function handleWish(e, productData) {
+    wishHandler(e, { ...productData, wish: isWish });
+    setIsWish((item) => !item);
+  }
+  function handleCart(e, productData) {
+    addCart(e, { ...productData, quantity: 1, totalPrice: productData.price });
+
+    setIsCart((item) => !item);
+  }
+
   const shoeSize = [
     { size: "UK 6.5", status: "notAvailable" },
     { size: "UK 7", status: "available" },
@@ -39,7 +74,7 @@ function Product() {
     { size: "UK 10.5", status: "available" },
     { size: "UK 11", status: "available" },
   ];
-  console.log(productData?.inCart);
+
   return (
     <div className={styles.productContainer}>
       <div className={styles.imageContainer}>
@@ -47,7 +82,7 @@ function Product() {
       </div>
       <div className={styles.detailsSection}>
         <div style={{ width: "300px" }}>
-          <div >
+          <div>
             <p className={styles.productName}>{productData?.productName}</p>
             <p className={styles.productNameTitle}>Men's Road Running Shoes</p>
           </div>
@@ -57,6 +92,7 @@ function Product() {
             <p className={styles.productNameTitle}>
               (Also includes all applicable duties)
             </p>
+            <Star />
           </div>
         </div>
         <p className={styles.sizeText}>Select Size</p>
@@ -70,19 +106,13 @@ function Product() {
         <div className={styles.buttonSection}>
           {productData?.soldOut ? (
             <p className={styles.soldOut}>Sold Out</p>
-          ) : productData?.inCart ? (
+          ) : isCart ? (
             <button className={styles.cartButtonIn}>
               Product Is Already In Cart
             </button>
           ) : (
             <button
-              onClick={(e) =>
-                productData
-                  ? handleCart(e, productData).then(() =>
-                      countCartFn().then(() => getProduct(productId))
-                    )
-                  : ""
-              }
+              onClick={(e) => (productData ? handleCart(e, productData) : "")}
               className={styles.cartButton}
             >
               Add To Cart
@@ -90,17 +120,11 @@ function Product() {
           )}
 
           <button
-            onClick={(e) =>
-              productData
-                ? wishHandler(e, productData, setIsWish).then(() =>
-                    getProduct(productId)
-                  )
-                : ""
-            }
+            onClick={(e) => (productData ? handleWish(e, productData) : "")}
             style={{ fontWeight: "700" }}
           >
             Wish
-            {(isWish === undefined ? productData?.wish : isWish) ? (
+            {isWish ? (
               <MdFavorite style={{ color: "#ff5441", fontSize: "18px" }} />
             ) : (
               <MdOutlineFavoriteBorder style={{ fontSize: "18px" }} />
@@ -111,7 +135,7 @@ function Product() {
           <p className={styles.productNameTitle}>
             This product is excluded from site promotions and discounts.
           </p>
-          <p  className={styles.productAbout}>
+          <p className={styles.productAbout}>
             With maximum cushioning to support every mile, the Invincible 3
             gives you our highest level of comfort underfoot to help you stay on
             your feet today, tomorrow and beyond. Designed to help keep you on

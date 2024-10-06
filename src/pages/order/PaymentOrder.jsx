@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 function PaymentOrder() {
   let orderDetails = JSON.parse(localStorage.getItem("orderDetails"));
   const [paymentMethod, setPaymentMethod] = useState("none");
-  const { cartList, getCart, setOrderFn, deleteCart } = usePosts();
+  const { cartList, getCart, setOrderFn, deleteAllCart } = usePosts();
   const navigate = useNavigate();
-  console.log(orderDetails)
+  console.log(orderDetails);
   useEffect(function () {
     getCart();
   }, []);
@@ -18,9 +18,9 @@ function PaymentOrder() {
   cartList ? console.log(cartList) : console.log("not Fetch yet");
   function payOnClickHandler() {
     const order = { orderDetails, cartList };
-    setOrderFn(order)
-      .then(() => deleteCart())
-      .then(() => navigate("/order", { replace: true }));
+    setOrderFn(order);
+    navigate("/order", { replace: true });
+    deleteAllCart()
   }
   return (
     <div className={styles.orderPaymentContainer}>

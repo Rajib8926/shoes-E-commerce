@@ -1,18 +1,19 @@
 import { Form, redirect } from "react-router-dom";
 import styles from "./CreateOrder.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePosts } from "../../PostProvider";
 import Lottie from "lottie-react";
 import animationData from "../../assets/createOrder.json";
 import { BsXCircleFill } from "react-icons/bs";
 
-import { RxCheckCircled } from "react-icons/rx";
 
 function CreateOrder() {
   const [correctNo, setCorrectNo] = useState(true);
   const [correctNoSe, setCorrectNoSe] = useState(true);
-  const { cartList } = usePosts();
-
+  const { cartList, getCart } = usePosts();
+  useEffect(function () {
+    getCart();
+  }, []);
   function validatePhoneNumber(phoneNumber) {
     var regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
     if (regex.test(phoneNumber)) {
@@ -24,7 +25,7 @@ function CreateOrder() {
   return (
     <div className={styles.CreateOrderCont}>
       <div>
-        {cartList?.length === 0 ? (
+        {cartList?.length === 0 || cartList === null ? (
           <div className={styles.emptyContainer}>
             <h2>Your Cart is Empty</h2>
             <Lottie

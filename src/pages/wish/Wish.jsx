@@ -11,7 +11,7 @@ function Wish() {
   }, []);
   return (
     <div className={styles.WishListContainer}>
-      {wishList?.length === 0 || wishList === undefined ? (
+      {wishList?.length === 0 || wishList === undefined || wishList === null ? (
         <div className={styles.emptyContainer}>
           <Lottie className={styles.lottieIcon} animationData={animationData} />
         </div>
@@ -20,7 +20,7 @@ function Wish() {
           <h1>Wish list</h1>
           <div className={styles.wishItemContainer}>
             {wishList?.map((item) => (
-              <WishItem item={item} />
+              <WishItem item={item} key={item?.id}/>
             ))}
           </div>
         </>

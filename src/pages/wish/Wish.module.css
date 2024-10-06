@@ -1,19 +1,18 @@
 .WishListContainer {
   padding-top: 110px;
   margin: 0 420px;
-  height: 100vh;
+  min-height: 80vh;
+  padding-bottom: 200px;
 }
 .WishListContainer h1 {
   color: #2c3e50;
   margin-bottom: 30px;
 }
-.wishItemContainer {
-  /* background-color: rgb(238, 238, 238); */
-}
+
 
 .emptyContainer {
   width: 100%;
-  height: 80vh;
+  min-height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,7 +40,6 @@
   .WishListContainer {
     width: 470px;
     margin: 0 auto;
-
   }
 }
 @media only screen and (max-width: 500px) {
@@ -49,18 +47,15 @@
     width: 400px;
     margin: 0 auto;
   }
-  .WishListContainer h1{
+  .WishListContainer h1 {
     font-size: 28px;
-   }
- 
+  }
 }
 @media only screen and (max-width: 407px) {
   .WishListContainer {
-    width :100vw;
+    width: 100vw;
     margin: 0 auto;
     padding-right: 7px;
     padding-left: 7px;
-
   }
- 
 }

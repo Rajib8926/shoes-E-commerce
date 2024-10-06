@@ -1,37 +1,67 @@
-import { deleteDoc, doc, getFirestore, updateDoc } from "firebase/firestore";
 import styles from "./CartItem.module.css";
-import { app } from "../../fireBase";
+
 import { usePosts } from "../../PostProvider";
 import { useState } from "react";
 import { FaMinus } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
 import { HiMiniXMark } from "react-icons/hi2";
+import Star from "../../ui/Star";
 function CartItem({ item }) {
   const [quantitys, setQuantitys] = useState(item.quantity);
-  const { getCart, countCartFn, removeCart } = usePosts();
-  const db = getFirestore(app);
-  // async function removeCart(product) {
-  //   const examcollref = doc(db, "menu", product.id);
-  //   updateDoc(examcollref, {
-  //     inCart: false,
-  //   });
-  //   await deleteDoc(doc(db, "cart", product.id)).then(getCart);
-  // }
+
+  const { removeCart, cartList, setCartList } = usePosts();
+  ///////////////for quantity degrees function /////////////////////
   function decriseQu(product) {
     setQuantitys((num) => num - 1);
-    const examcollref = doc(db, "cart", product.id);
-    updateDoc(examcollref, {
+    let editProduct = {
+      ...product,
       quantity: quantitys - 1,
       totalPrice: product.price * (quantitys - 1),
-    }).then(getCart);
+    };
+    let cartDataPre = localStorage.getItem("royCart");
+    let cartData = JSON.parse(cartDataPre);
+    let filterCart = cartData.filter((item) => item.id !== product.id);
+    let updateCart = [...filterCart, editProduct];
+    console.log(updateCart);
+    localStorage.setItem("royCart", JSON.stringify(updateCart));
+    setCartList(
+      cartList.map((data) =>
+        data.id === item.id
+          ? {
+              ...data,
+              quantity: quantitys - 1,
+              totalPrice: product.price * (quantitys - 1),
+            }
+          : data
+      )
+    );
   }
+  ///////////////for quantity increase function /////////////////////
   function incriseQu(product) {
     setQuantitys((num) => num + 1);
-    const examcollref = doc(db, "cart", product.id);
-    updateDoc(examcollref, {
+    let editProduct = {
+      ...product,
       quantity: quantitys + 1,
       totalPrice: product.price * (quantitys + 1),
-    }).then(getCart);
+    };
+    let cartDataPre = localStorage.getItem("royCart");
+    let cartData = JSON.parse(cartDataPre);
+    let filterCart = cartData.filter((item) => item.id !== product.id);
+    let updateCart = [editProduct, ...filterCart];
+    console.log(updateCart);
+    localStorage.setItem("royCart", JSON.stringify(updateCart));
+
+    setCartList(
+      cartList.map((data) =>
+        data.id === item.id
+          ? {
+              ...data,
+              quantity: quantitys + 1,
+              totalPrice: product.price * (quantitys + 1),
+            }
+          : data
+      )
+    );
   }
   return (
     <div className={styles.cartItem}>
@@ -41,6 +71,7 @@ function CartItem({ item }) {
         </div>
         <div className={styles.detailSection}>
           <p className={styles.name}>{item.productName}</p>
+          <Star/>
           <p className={styles.color}>Colour: #####</p>
           <p className={styles.price}>₹ {item.price}</p>
         </div>
@@ -58,10 +89,7 @@ function CartItem({ item }) {
           </button>
         </div>
         <div className={styles.btnSection}>
-          <button
-            className={styles.removeBtn}
-            onClick={() => removeCart(item).then(countCartFn)}
-          >
+          <button className={styles.removeBtn} onClick={() => removeCart(item)}>
             <HiMiniXMark />
           </button>
           <div></div>

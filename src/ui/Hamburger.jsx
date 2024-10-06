@@ -6,11 +6,11 @@ import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { RiShoppingCartLine } from "react-icons/ri";
 import { TbTruckDelivery } from "react-icons/tb";
 import { useState } from "react";
-import { Turn } from "hamburger-react";
+
 function Hamburger() {
   const [isChecked, setIsChecked] = useState(false);
-  function checkControl(){
-    setIsChecked((data)=>!data)
+  function checkControl() {
+    setIsChecked((data) => !data);
   }
   return (
     <div className={styles.hamburgerContainer}>
@@ -21,8 +21,7 @@ function Hamburger() {
           className={styles.menuOpen}
           name="menu-open"
           id="menu-open"
-          checked={isChecked?true:false}
-          onChange={(e) => console.log(e)}
+          checked={isChecked ? true : false}
           onClick={checkControl}
         />
         <label className={styles.menuOpenButton} for="menu-open">
@@ -34,16 +33,32 @@ function Hamburger() {
         <NavLink to={"/"} className={styles.menuItem} onClick={checkControl}>
           <HiOutlineHome />
         </NavLink>
-        <NavLink to={"/menu"} className={styles.menuItem} onClick={checkControl}>
+        <NavLink
+          to={"/menu"}
+          className={styles.menuItem}
+          onClick={checkControl}
+        >
           <AiOutlineProduct />
         </NavLink>
-        <NavLink to={"/wish"} className={styles.menuItem} onClick={checkControl}>
+        <NavLink
+          to={"/wish"}
+          className={styles.menuItem}
+          onClick={checkControl}
+        >
           <MdOutlineFavoriteBorder />
         </NavLink>
-        <NavLink to={"/cart"} className={styles.menuItem} onClick={checkControl}>
+        <NavLink
+          to={"/cart"}
+          className={styles.menuItem}
+          onClick={checkControl}
+        >
           <RiShoppingCartLine />
         </NavLink>
-        <NavLink to={"/order"} className={styles.menuItem} onClick={checkControl}>
+        <NavLink
+          to={"/order"}
+          className={styles.menuItem}
+          onClick={checkControl}
+        >
           <TbTruckDelivery />
         </NavLink>
       </div>

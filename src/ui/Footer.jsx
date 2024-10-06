@@ -2,7 +2,7 @@ import styles from "./Footer.module.css";
 import { FaFacebook } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
-import { IoLogoYoutube } from "react-icons/io";
+import { MdAttachEmail } from "react-icons/md";
 
 function Footer() {
   return (
@@ -35,22 +35,24 @@ function Footer() {
         <div className={styles.followCont}>
           <h3>Follow Us</h3>
           <div className={styles.socialIcons}>
-            <a href="#">
+            <a href="https://www.facebook.com/profile.php?id=100049178316585">
               <FaFacebook />
             </a>
-            <a href="#">
+            <a href="https://www.instagram.com/rajibroy8926/">
               <FaInstagram />
             </a>
-            <a href="#">
+            <a href="https://www.linkedin.com/in/rajib-roy-888087304/">
               <FaLinkedin />
             </a>
-            <a href="#">
-              <IoLogoYoutube />
+            <a href={"mailto:rajibroy89265@gmail.com"} target="_blank">
+              <MdAttachEmail />
             </a>
           </div>
         </div>
       </div>
-      <p className={styles.bottomFooter}>&copy; 2024 E-commerce Website. All rights reserved.</p>
+      <p className={styles.bottomFooter}>
+        &copy; 2024 E-commerce Website. All rights reserved.
+      </p>
     </footer>
   );
 }

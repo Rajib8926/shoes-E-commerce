@@ -29,15 +29,18 @@
 }
 .cartContainer{
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .cartCount{
   position: absolute;
   top: -5px;
   width: 15px;
   height: 15px;
-  font-size: 12px;
+  font-size: 9.5px;
   text-decoration: none;
-  background: black;
+  background: rgb(54, 54, 54);
   color: white;
   border-radius: 50%;
   display: flex;

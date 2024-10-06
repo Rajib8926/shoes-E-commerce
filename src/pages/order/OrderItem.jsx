@@ -8,7 +8,6 @@ function OrderItem({ data }) {
   function deleteOrderHandler(data) {
     deleteOrder(data);
   }
-  console.log(data);
   let totalPriceCart = 0;
   data.cartList?.forEach((item) => {
     totalPriceCart += item.totalPrice;
@@ -49,7 +48,10 @@ function OrderItem({ data }) {
         <div className={styles.orderStatus}>
           <p className={styles.orderStatusHading}>Order Status</p>
           <DeliveryStatusBtn />
-          <button onClick={() => deleteOrderHandler(data.id)} className={styles.orderCancel}>
+          <button
+            onClick={() => deleteOrderHandler(data.id)}
+            className={styles.orderCancel}
+          >
             Cancel Order
           </button>
         </div>
@@ -71,6 +73,7 @@ function OrderItem({ data }) {
               {data.orderDetails.Ph_no} ,{data.orderDetails.Backup_PhNo}{" "}
             </p>
           </div>
+          
         </div>
       </div>
     </div>

@@ -1,124 +1,132 @@
-import { createContext, useContext, useEffect } from "react";
-import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  getCountFromServer,
-  getDocs,
-  getFirestore,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { createContext, useContext } from "react";
+import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { app } from "./fireBase";
 import { useState } from "react";
 
 const PostContext = createContext();
-// window.addEventListener("scroll",()=>{console.log(window.scrollY)})
 function PostProvider({ children }) {
   const [productList, setProductList] = useState();
   const [wishList, setWishList] = useState();
-  const [cartList, setCartList] = useState();
-  const [cartCount, setCartCount] = useState();
   const [orderList, setOrderList] = useState();
-  // useEffect(() => {
-  //   getData();
-  // }, []);
+  const [cartList, setCartList] = useState();
+  const [cartCount, setCartCount] = useState(0);
+  const [wishCount, setWishCount] = useState(0);
   async function getData() {
     const db = getFirestore(app);
     const docRef = collection(db, "menu");
     const docSnap = await getDocs(docRef);
-    const data = docSnap.docs.map((doc) => ({
+    const beforeData = docSnap.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
-    // localStorage.setItem('menu', JSON.stringify(PreData));
-    // var data = JSON.parse(localStorage.getItem("menu"));
-    // console.log(data)
+    let preData = [];
 
-    setProductList(data);
+    let wishDataPre = localStorage.getItem("royWish");
+    let wishData = JSON.parse(wishDataPre);
+
+    let cartDataPre = localStorage.getItem("royCart");
+    let cartData = JSON.parse(cartDataPre);
+
+    if (wishData || cartData) {
+      beforeData.forEach((obj1) => {
+        const wishItem = wishData?.find((obj2) => obj2?.id === obj1?.id);
+        const cartItem = cartData?.find((obj3) => obj3?.id === obj1?.id);
+        if (wishItem || cartItem) {
+          if (wishItem && !cartItem) {
+            preData.push({ ...obj1, wish: true });
+          } else if (!wishItem && cartItem) {
+            preData.push({ ...obj1, inCart: true });
+          } else if (wishItem && cartItem) {
+            preData.push({ ...obj1, inCart: true, wish: true });
+          }
+        } else {
+          preData.push(obj1);
+        }
+      });
+    }
+    if (!wishData && !wishData) {
+      preData = beforeData;
+      setProductList(preData);
+    }
+    if (preData[0].id) {
+      setProductList(preData);
+    }
   }
-  async function countCartFn() {
-    const db = getFirestore(app);
-    const coll = collection(db, "cart");
-    const snapshot = await getCountFromServer(coll);
-    const cartCount = snapshot.data().count;
-    setCartCount(cartCount);
-  }
-  const deleteOrder = async (orderId) => {
-    console.log(orderId);
-    const db = getFirestore(app);
-    await deleteDoc(doc(db, "orders", orderId)).then(getOrder);
+
+  ///// set order function/////////////
+  const setOrderFn = (order) => {
+    let preData = localStorage.getItem("royOrder");
+    let prOrder = JSON.parse(preData);
+    localStorage.setItem(
+      "royOrder",
+      JSON.stringify(
+        prOrder
+          ? [{ ...order, id: new Date() }, ...prOrder]
+          : [{ ...order, id: new Date() }]
+      )
+    );
   };
-  const deleteCart = async () => {
-    await cartList.map((el) => removeCart(el).then(countCartFn));
+  const getOrder = () => {
+    let preData = localStorage.getItem("royOrder");
+    let data = JSON.parse(preData);
+    setOrderList(data);
   };
-  async function getWish() {
-    const db = getFirestore(app);
-    const docRef = collection(db, "wish");
-    const docSnap = await getDocs(docRef);
-    const data = docSnap.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    setWishList(data);
+  function deleteOrder(orderId) {
+    let preData = localStorage.getItem("royOrder");
+    let prOrder = JSON.parse(preData);
+    let updateOrder = prOrder.filter((item) => item.id !== orderId);
+    localStorage.setItem("royOrder", JSON.stringify(updateOrder));
+    getOrder();
   }
-  async function getCart() {
-    const db = getFirestore(app);
-    const docRef = collection(db, "cart");
-    const docSnap = await getDocs(docRef);
-    const data = docSnap.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    setCartList(data);
-  }
-  function productDataFn(id) {
-    const data = productList?.filter((item) => item.id === id);
-    return data;
-  }
-  const handleCart = async (e, product) => {
+  ///////////////////cart/////////////////
+  function addCart(e, product) {
     let isCart;
     if (product.inCart === false) {
       isCart = true;
     } else if (product.inCart === true) {
       isCart = false;
     }
+
     e.stopPropagation();
-    const db = getFirestore(app);
-
-    await setDoc(doc(db, "cart", product.id), {
-      productName: product.productName,
-      price: product.price,
-      soldOut: product.soldOut,
-      imageUrl: product.imageUrl,
-      quantity: 1,
-      totalPrice: product.price,
-    }).then(countCartFn);
-    const examcollref = doc(db, "menu", product.id);
-    updateDoc(examcollref, {
-      inCart: isCart,
-    });
-  };
-
-  ///// set order function/////////////
-  const setOrderFn = async (order) => {
-    const db = getFirestore(app);
-    const docRef = await addDoc(collection(db, "orders"), order);
-  };
-
-  const getOrder = async () => {
-    const db = getFirestore(app);
-    const docRef = collection(db, "orders");
-    const docSnap = await getDocs(docRef);
-    const data = docSnap.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    setOrderList(data);
-  };
-
-  const wishHandler = async (e, product, setIsWish) => {
+    if (isCart === false) {
+      let cartDataPre = localStorage.getItem("royCart");
+      let cartData = JSON.parse(cartDataPre);
+      if (cartData !== null) {
+        localStorage.setItem(
+          "royCart",
+          JSON.stringify(cartData.filter((item) => item.id !== product.id))
+        );
+      }
+    }
+    if (isCart === true) {
+      let cartDataPre = localStorage.getItem("royCart");
+      let cartData = JSON.parse(cartDataPre);
+      setCartCount(cartData ? cartData.length + 1 : 1);
+      localStorage.setItem(
+        "royCart",
+        JSON.stringify(cartData !== null ? [...cartData, product] : [product])
+      );
+    }
+  }
+  function getCart() {
+    let cartDataPre = localStorage.getItem("royCart");
+    let cartData = JSON.parse(cartDataPre);
+    setCartCount(cartData ? cartData.length : 0);
+    setCartList(cartData);
+  }
+  function removeCart(data) {
+    let cartDataPre = localStorage.getItem("royCart");
+    let cartData = JSON.parse(cartDataPre);
+    setCartCount(cartData.length - 1);
+    let filterCart = cartData.filter((item) => item.id !== data.id);
+    localStorage.setItem("royCart", JSON.stringify(filterCart));
+    getCart();
+  }
+  function deleteAllCart() {
+    localStorage.removeItem("royCart");
+  }
+  ////////////////////wish /////////////////////
+  const wishHandler = async (e, product) => {
     let isWish;
     if (product.wish === false) {
       isWish = true;
@@ -126,52 +134,67 @@ function PostProvider({ children }) {
       isWish = false;
     }
     e.stopPropagation();
-    const db = getFirestore(app);
-    setIsWish(isWish);
-    await setDoc(doc(db, "wish", product.id), {
-      productName: product.productName,
-      price: product.price,
-      soldOut: product.soldOut,
-      imageUrl: product.imageUrl,
-      inCart: product.inCart,
-    }).then(getWish);
-    if (isWish === false) {
-      await deleteDoc(doc(db, "wish", product.id));
-    }
-    const examcollref = doc(db, "menu", product.id);
-    updateDoc(examcollref, {
-      wish: isWish,
-    }).then((ref) => getData());
-  };
-  async function removeCart(product) {
-    const db = getFirestore(app);
-    const examcollref = doc(db, "menu", product.id);
-    updateDoc(examcollref, {
-      inCart: false,
-    });
-    await deleteDoc(doc(db, "cart", product.id)).then(getCart);
-  }
 
+    let wishProductPre = productList?.filter((item) => item.id === product.id);
+    let wishProduct = wishProductPre?.map((item) => {
+      return { ...item, wish: true };
+    });
+
+    setProductList((data) =>
+      data?.map((item) =>
+        item.id === product.id ? { ...item, wish: isWish } : item
+      )
+    );
+    if (isWish === false) {
+      let wishDataPre = localStorage.getItem("royWish");
+      let wishData = JSON.parse(wishDataPre);
+      setWishCount(wishData.length - 1);
+      if (wishData !== null) {
+        localStorage.setItem(
+          "royWish",
+          JSON.stringify(wishData.filter((item) => item.id !== product.id))
+        );
+      }
+    }
+    if (isWish === true) {
+      let wishDataPre = localStorage.getItem("royWish");
+      let wishData = JSON.parse(wishDataPre);
+      setWishCount(wishData ? wishData.length + 1 : 1);
+      localStorage.setItem(
+        "royWish",
+        JSON.stringify(
+          wishData !== null ? [...wishData, ...wishProduct] : wishProduct
+        )
+      );
+    }
+  };
+  function getWish() {
+    let wishDataPre = localStorage.getItem("royWish");
+    let wishData = JSON.parse(wishDataPre);
+    setWishCount(wishData ? wishData.length : 0);
+    setWishList(wishData);
+    return wishData;
+  }
   return (
     <PostContext.Provider
       value={{
         productList,
         getData,
-        getWish,
         wishList,
-        productDataFn,
-        getCart,
-        cartList,
+        getWish,
         wishHandler,
-        handleCart,
-        countCartFn,
-        cartCount,
+        addCart,
         setOrderFn,
         orderList,
         getOrder,
-        deleteOrder,
-        deleteCart,
+        cartList,
+        getCart,
         removeCart,
+        deleteAllCart,
+        deleteOrder,
+        setCartList,
+        cartCount,
+        wishCount,
       }}
     >
       {children}
