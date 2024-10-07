@@ -62,7 +62,12 @@ function Home() {
             </Fade>
             <Fade direction={"up"} duration={1500}>
               <p className={styles.price}>₹17,520</p>
-              <button className={styles.byNowBtn}>By Now</button>
+              <button
+                className={styles.byNowBtn}
+                onClick={() => navigate("/menu")}
+              >
+                Buy Now
+              </button>
             </Fade>
           </div>
           <div className={styles.imageSection}>
