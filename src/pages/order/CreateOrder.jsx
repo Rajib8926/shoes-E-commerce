@@ -6,7 +6,6 @@ import Lottie from "lottie-react";
 import animationData from "../../assets/createOrder.json";
 import { BsXCircleFill } from "react-icons/bs";
 
-
 function CreateOrder() {
   const [correctNo, setCorrectNo] = useState(true);
   const [correctNoSe, setCorrectNoSe] = useState(true);
