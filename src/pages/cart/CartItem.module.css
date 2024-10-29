@@ -34,7 +34,6 @@
 }
 .inDeBrnSection {
   display: flex;
-
 }
 .inAndDeButton button {
   font-size: 17px;
@@ -48,6 +47,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 3;
 }
 .removeBtn {
   border: none;
@@ -87,7 +87,7 @@
   .cartItem {
     width: 550px;
   }
-  .inAndDeButton{
+  .inAndDeButton {
     margin-right: 70px;
   }
 }
@@ -95,14 +95,14 @@
   .cartItem {
     width: 440px;
   }
-  .inAndDeButton{
+  .inAndDeButton {
     margin-right: -20px;
   }
-  .imageContainer{
+  .imageContainer {
     width: 130px;
     height: 110px;
   }
-  .itemImage{
+  .itemImage {
     width: 110px;
   }
 }
@@ -110,21 +110,20 @@
   .cartItem {
     width: 97vw;
   }
-  .detailSection{
+  .detailSection {
     padding-left: 5px;
   }
-  .inAndDeButton{
+  .inAndDeButton {
     margin-right: -20px;
   }
-  .imageContainer{
+  .imageContainer {
     width: 130px;
     height: 110px;
   }
-  .itemImage{
+  .itemImage {
     width: 110px;
   }
-  .inDeBrnSection{
+  .inDeBrnSection {
     padding-left: 0px;
   }
- 
 }

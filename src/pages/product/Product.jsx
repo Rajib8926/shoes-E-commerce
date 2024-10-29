@@ -15,6 +15,7 @@ function Product() {
 
   useEffect(
     function () {
+      window.scrollTo(0, 0);
       let data = undefined;
       let cartDataPre = localStorage.getItem("royCart");
       let cartData = JSON.parse(cartDataPre);

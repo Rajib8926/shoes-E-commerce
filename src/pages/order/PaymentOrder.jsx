@@ -9,6 +9,7 @@ function PaymentOrder() {
   const navigate = useNavigate();
   console.log(orderDetails);
   useEffect(function () {
+    window.scrollTo(0, 0);
     getCart();
   }, []);
   let totalPriceCart = 0;

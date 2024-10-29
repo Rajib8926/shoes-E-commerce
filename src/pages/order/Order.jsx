@@ -7,12 +7,15 @@ import animationData from "../../assets/orderEmpty.json";
 function Order() {
   const { orderList, getOrder } = usePosts();
   useEffect(function () {
+    window.scrollTo(0, 0);
     getOrder();
   }, []);
 
   return (
     <div className={styles.orderContainer}>
-      {orderList?.length === 0 || orderList === undefined || orderList === null? (
+      {orderList?.length === 0 ||
+      orderList === undefined ||
+      orderList === null ? (
         <div className={styles.emptyContainer}>
           <Lottie className={styles.lottieIcon} animationData={animationData} />
         </div>

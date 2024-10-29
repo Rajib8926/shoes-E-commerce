@@ -12,6 +12,7 @@ function CreateOrder() {
   const [correctNoSe, setCorrectNoSe] = useState(true);
   const { cartList, getCart } = usePosts();
   useEffect(function () {
+    window.scrollTo(0, 0);
     getCart();
   }, []);
   function validatePhoneNumber(phoneNumber) {
