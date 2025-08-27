@@ -2,16 +2,25 @@
   width: 100vw;
   height: 55px;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-  background: transparent;
+  /* position: absolute; */
+  top: 0px;
+  margin: 0 auto;
+  gap: 250px;
+  backdrop-filter: blur(10px);
+}
+.navBackdrop {
   position: absolute;
-  top: 10px;
-  z-index: 3;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
 }
 .fullNavigationCont a {
   font-size: 28px;
   color: #646464;
+  padding: 5px 10px;
+  text-decoration: none;
 }
 
 .label {
@@ -22,7 +31,6 @@
   margin-left: 15px;
   position: absolute;
   top: 20px;
-  z-index: 4;
 }
 .displayNone {
   display: none;
@@ -48,16 +56,69 @@
   justify-content: center;
   right: -6px;
 }
-
+.navigationBar {
+  position: fixed;
+  z-index: 10;
+}
+.navigationText {
+  display: none;
+}
+.hamburgerContainer {
+  display: none;
+}
+@media only screen and (max-width: 1300px) {
+  .fullNavigationCont {
+    justify-content: space-around;
+    gap: 0;
+  }
+}
 @media only screen and (max-width: 650px) {
   .fullNavigationCont {
-    display: none;
+    flex-direction: column;
+    width: 80vw;
+    position: absolute;
+    height: 100vh;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: absolute;
+    padding: 0 20px;
+    gap: 20px;
+    background: rgba(0, 0, 0, 0.363);
+    right: -80vw;
+    transition: right 0.3s;
+    margin-top: 68px;
   }
-
+  .cartContainer {
+    width: 100%;
+  }
+  .hamburgerContainer {
+    display: flex;
+    width: 100vw;
+    backdrop-filter: blur(10px);
+    padding: 10px 20px;
+    justify-content: flex-end;
+    background: rgba(0, 0, 0, 0.253);
+  }
+  .navigationText {
+    display: block;
+    font-size: 18px;
+    font-weight: 500;
+    color: rgb(255, 255, 255);
+  }
+  .fullNavigationCont a {
+    font-size: 28px;
+    color: #ffffff;
+    padding: 10px 15px;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    gap: 18px;
+   
+  }
   .displayNone {
     display: flex;
   }
   .fullNavigationCont {
-    top: 0;
+    padding-top: 150px;
   }
 }
